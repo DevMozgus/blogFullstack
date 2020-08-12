@@ -1,5 +1,7 @@
 const dummy = (blogs) => {
-	return 1;
+	blogs.reduce((sum, item) => {
+		return sum.likes + item.likes;
+	}, 0);
 };
 
 module.exports = {
