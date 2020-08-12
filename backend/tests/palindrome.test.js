@@ -51,7 +51,7 @@ test('dummy returns 1', () => {
 			__v: 0
 		}
 	];
-
-	const result = test.dummy(blogs);
+	console.log(blogs, blogs[0].likes);
+	const result = test(blogs);
 	expect(result).toBe(36);
 });
