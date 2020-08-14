@@ -1,4 +1,13 @@
-const test = require('../utils/for_testing').dummy;
+//const test = require('../utils/for_testing').dummy;
+
+const dummy = (posts) => {
+	let likes = posts.map(post => post.likes);
+
+	likes = likes.reduce((sum, post) => sum + post);
+	return likes
+}
+
+
 
 const blogs = [
 	{
@@ -51,9 +60,11 @@ const blogs = [
 	}
 ];
 
-test('dummy returns 1', () => {
-	const result = test(blogs);
+
+test('blog total likes', () => {
+	const result = dummy(blogs);
 	expect(result).toBe(36);
 });
 
-//console.log(test(blogs));
+
+console.log(dummy(blogs));
