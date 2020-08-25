@@ -1,13 +1,66 @@
 //const test = require('../utils/for_testing').dummy;
 
 const dummy = (posts) => {
-	let likes = posts.map(post => post.likes);
+	let likes = posts.map((post) => post.likes);
 
 	likes = likes.reduce((sum, post) => sum + post);
-	return likes
-}
+	return likes;
+};
 
+const favouritePost = (posts) => {
+	posts = posts.map((blog) => blog.likes);
 
+	//let post = posts.reduce((max, curr) => Math.max(max, curr), 0);
+	let post = Math.max(...posts);
+	post = posts.findIndex((blog) => blog == post);
+	return blogs[post];
+};
+
+const mostBlogs = (posts) => {
+	const blogAuthors = [];
+
+	const isUniqueAuthor = (author) => {
+		blogAuthors.filter((exisingAuthor) => exisingAuthor.hasOwnProperty(author));
+	};
+
+	for (i = 0; i < posts.length; i++) {
+		if (!isUniqueAuthor(posts[i].author)) {
+			let currentAuthor = posts[i].author;
+			blogAuthors[currentAuthor] = 0;
+			posts.map((post) => (post.author === currentAuthor ? (blogAuthors[currentAuthor] += 1) : 0));
+		}
+	}
+	const authorsBlogCount = Object.values(blogAuthors);
+	let topAuthor = Math.max(...authorsBlogCount);
+	topAuthor = Object.keys(blogAuthors).find((author) => blogAuthors[author] === topAuthor);
+	return topAuthor;
+};
+
+const mostLikes = (posts) => {
+	const blogAuthors = [];
+
+	const isUniqueAuthor = (post) => {
+		return blogAuthors.find((author) => author.author === post) ? true : false;
+	};
+
+	for (i = 0; i < posts.length; i++) {
+		if (!isUniqueAuthor(posts[i].author)) {
+			const author = {};
+			author.author = posts[i].author;
+			author.likes = posts[i].likes;
+
+			blogAuthors.push(author);
+		} else {
+			repeatedAuthor = blogAuthors.findIndex((val) => val.author === posts[i].author);
+			blogAuthors[repeatedAuthor].likes += posts[i].likes;
+		}
+	}
+	let mostLiked = blogAuthors.map((author) => author.likes);
+	mostLiked = Math.max(...mostLiked)
+	mostLiked = blogAuthors.findIndex((val) => val.likes == mostLiked);
+	mostLiked = blogAuthors	[mostLiked];
+	return mostLiked.author;
+};
 
 const blogs = [
 	{
@@ -60,11 +113,23 @@ const blogs = [
 	}
 ];
 
+describe('blog likes', () => {
+	test('Sum of all blog likes', () => {
+		const result = dummy(blogs);
+		expect(result).toBe(36);
+	});
 
-test('blog total likes', () => {
-	const result = dummy(blogs);
-	expect(result).toBe(36);
-});
+	test('Highest likes blog', () => {
+		const result = favouritePost(blogs);
+		expect(result).toEqual(blogs[2]);
+	});
 
+	test('Most liked Author', () => {
+		const result = mostLikes(blogs);
+		expect(result).toEqual(blogs[2].author);
+	});
+}); 
 
-console.log(dummy(blogs));
+//console.log('Expect Canonical string reduction: ', favouritePost(blogs));
+//console.log('Expect Robert C: ', mostBlogs(blogs));
+//console.log(mostLikes(blogs));
