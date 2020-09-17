@@ -1,0 +1,11 @@
+PUT http://localhost:3001/api/blogs/5f61c71ef3121b638e0727f4/comments
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjVmM2NlNDM5NzZkZjg2NjMwYTk5NWUxMiIsImlhdCI6MTYwMDI0MzMwOX0.0KfPEgcsCjmH9W7Xds-3Np6XtlxLBV7qcFcN-HLdmsM
+
+{
+    "title": "comments test2.0",
+    "author": "Tester",
+    "url": "rando.org",
+    "likes": 2,
+    "comments": [ "show bob", "show vagene" ]
+}

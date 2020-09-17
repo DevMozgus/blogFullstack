@@ -1,9 +1,0 @@
-PUT http://localhost:3001/api/blogs/5f38ff6014231e7ba19aa56f
-content-type: application/json
-
-{
-    "title": "Update",
-    "author": "Cheff",
-    "url": "rando.org",
-    "likes": 2,
-}

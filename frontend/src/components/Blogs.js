@@ -1,99 +1,73 @@
-import React from 'react'
-import blogService from '../services/blog'
-import Togglable from './Togglable'
+import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-const Blogs = ({ blogs, setBlogs, user, setMessage }) => {
-  const style = {
-    border: "3px solid",
-    borderRadius: "3px",
-    margin: "1vh",
-    padding: "1vh"
-  }
+const Blogs = () => {
+  const blogs = useSelector((state) => state.blogs);
+  const user = useSelector((state) => state.user);
 
-  const addLike = async (id) => {
-    const blog = blogs.find(blog => blog.id === id)
-    const newBlog = {
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      likes: (blog.likes + 1),
-    }
-    try {
-      const returnedBlog = await blogService.updateBlog(id, newBlog)
-      const index = blogs.findIndex(blog => blog.id === id)
-      //const newBlogs = await blogService.getAll()
-      returnedBlog.user = {
-        id: returnedBlog.user,
-        username: user.username,
-        name: user.name
-      }
-      const newBlogs = [...blogs]
-      newBlogs[index] = returnedBlog
-      setBlogs(newBlogs)
-    } catch (err) {
-      const error = {
-        error: 'Failed to update blog',
-        err: err
-      }
-      setMessage(error)
-    }
-  }
+  const sortedBlogs = blogs.sort((curr, next) => next.likes - curr.likes);
 
-  const deleteBlog = async (id, title) => {
-    if (window.confirm(`Remove blog '${title}'?`)) {
-      try {
-        await blogService.deleteBlog(id)
-        const updatedBlogs = blogs.filter(blog => blog.id !== id)
-        setBlogs(updatedBlogs)
-      } catch (err) {
-        const error = {
-          error: 'Failed to delete blog',
-          err: err
-        }
-        setMessage(error)
-      }
-    }
-  }
+  const direct = user ? "/blogs/create" : "/login";
 
-  const sortedBlogs = blogs.sort((curr, next) => next.likes - curr.likes)
   return (
     <>
-      {sortedBlogs.map(blog => {
+      <CreateBlog>
+        <Link to={direct}>Make your own blog?</Link>
+      </CreateBlog>
+
+      {sortedBlogs.map((blog, index) => {
+        const blogId = `blogNum${index}`;
         return (
-          <div className='blogs' style={style} key={blog.id}>
-            <Blog blog={blog}
-              addLike={addLike}
-              deleteBlog={deleteBlog}
-              user={user} />
-          </div>
-        )
+          <Blog id={blogId} key={blog.id}>
+            <LinkDiv>
+              <Link to={`/blogs/${blog.id}`}>
+                <h3>{blog.title}</h3>
+              </Link>
+            </LinkDiv>
+            <BlogInfo>{blog.likes} like/s</BlogInfo>
+            <BlogInfo>By u/{blog.user.username}</BlogInfo>
+          </Blog>
+        );
       })}
     </>
-  )
-}
+  );
+};
 
-const Blog = ({ blog, addLike, deleteBlog, user }) => {
-  return (
-    <>
-      <h4>{blog.title}</h4>
-      <Togglable label1={"show blog"} label2={"hide blog"}>
-        <p>Author: {blog.author}</p>
-        <p>Link: {blog.url}</p>
-        {user ?
-          <>
-            <p>Likes: {blog.likes}</p>
-            <button onClick={() => addLike(blog.id)}>like</button>
-          </>
-          : null
-        }
-        {
-          user && (user.username === blog.user.username || blog.user) ?
-            <button onClick={() => deleteBlog(blog.id, blog.title)}>delete</button>
-            : null
-        }
-      </Togglable>
-    </>
-  )
-}
+const BlogInfo = styled.h4`
+  margin-right: 1em;
+`;
 
-export default { Blogs, Blog }
+const LinkDiv = styled.div`
+  width: 100%;
+
+  h3 {
+    color: white;
+  }
+`;
+
+const Blog = styled.div`
+  height: 5vw;
+  border-top: solid 2px;
+  border-color: #16213e;
+  margin-bottom: 7%;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+`;
+
+const CreateBlog = styled.div`
+  display: flex;
+  align-items: center;
+  align-content: flex-end;
+  margin-bottom: 7%;
+  justify-content: space-between;
+  a {
+    text-decoration: underline;
+    text-decoration-color: #e94560;
+  }
+`;
+
+export default Blogs;

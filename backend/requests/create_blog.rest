@@ -1,11 +1,11 @@
 POST http://localhost:3001/api/blogs
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjVmM2NlNDM5NzZkZjg2NjMwYTk5NWUxMiIsImlhdCI6MTU5NzgyOTk3NX0.3EMRDo4AFLAyILfA2kBiUbmuSbX912R8W9ic4EjLe1A
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjVmM2NlNDM5NzZkZjg2NjMwYTk5NWUxMiIsImlhdCI6MTYwMDI0MzMwOX0.0KfPEgcsCjmH9W7Xds-3Np6XtlxLBV7qcFcN-HLdmsM
 
 {
-  "title": "token test",
+  "title": "comments test 2",
 	"author": "Testicle",
 	"url": "rando.org",
 	"likes": 2,
-	"userId": "5f3bfb1f5409862cbb82b5fd"
+	"comments": [ ]
 }

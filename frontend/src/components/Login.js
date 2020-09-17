@@ -1,65 +1,94 @@
-import React, { useState } from 'react'
-import loginService from '../services/login'
-import blogService from '../services/blog'
+import React from "react";
+import { loginUser } from "../reducers/userReducer";
+import { useDispatch } from "react-redux";
+import { newNotification } from "../reducers/messageReducer";
+import { useField } from "../hooks";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
-const Login = ({ setUser, setMessage }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+const Login = () => {
+  const [username, resetUsername] = useField("text");
+  const [password, resetPassword] = useField("password");
 
+  const history = useHistory();
+  const dispatch = useDispatch();
   const handleLogin = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     try {
-      const user = await loginService.login({
-        username, password
-      })
+      const user = {
+        username: username.value,
+        password: password.value,
+      };
+      dispatch(loginUser(user));
 
-      setUser(user)
-      setUsername('')
-      setPassword('')
-      blogService.setToken(user.token)
-
-      window.localStorage.setItem(
-        'loginUser', JSON.stringify(user)
-      )
-
+      resetPassword();
+      resetUsername();
       const success = {
-        success: 'Successful Login'
-      }
-      setMessage(success)
+        success: "Successful Login",
+      };
+      dispatch(newNotification(success));
+      history.push("/");
     } catch (err) {
       const error = {
-        error: 'Login Failed',
-        err: err
-      }
-      setMessage(error)
+        error: "Login Failed",
+        err: err,
+      };
+      dispatch(newNotification(error));
     }
-  }
+  };
 
   return (
     <>
-      {<form onSubmit={handleLogin}>
-        <div>
-          Username
-      <input
-            type="text"
-            value={username}
+      <Form onSubmit={handleLogin}>
+        <Input>
+          <label>Username</label>
+          <br />
+          <input
+            placeholder="Enter Username"
+            {...username}
+            id="username"
             name="Username"
-            onChange={({ target }) => setUsername(target.value)}
           />
-        </div>
-        <div>
-          password
-      <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>}
-    </>
-  )
-}
+        </Input>
+        <Input>
+          <label>Password</label>
+          <br />
 
-export default Login
+          <input
+            placeholder="Enter Password"
+            id="password"
+            name="Password"
+            {...password}
+          />
+        </Input>
+        <button className="importantButton" type="submit">
+          continue
+        </button>
+      </Form>
+    </>
+  );
+};
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 5%;
+  height: 100%;
+`;
+
+const Input = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1%;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  label {
+    color: white;
+    margin-bottom: 2px;
+  }
+`;
+
+export default Login;
