@@ -19,9 +19,10 @@ mongoose
 		logger.error('error connection to MongoDB:', error.message);
 	});
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://mernblog.nicolaurlicic.com'
+}));
 app.use(middleware.tokenExtractor)
-//app.use(express.static('build'));
 app.use(express.json());
 app.use(middleware.requestLogger);
 
@@ -29,9 +30,14 @@ app.use('/api/users', usersRouter)
 app.use('/api/blogs', blogRouter);
 app.use('/api/login', loginRouter);
 
+
 if (process.env.NODE_ENV === 'test') {
 	const testingRouter = require('./controllers/reset')
 	app.use('/api/testing', testingRouter)
+}
+
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('build'));
 }
 
 app.use(middleware.unknownEndpoint);

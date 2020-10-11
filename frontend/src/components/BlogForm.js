@@ -3,14 +3,15 @@ import { createBlog } from "../reducers/blogReducers";
 import { useDispatch } from "react-redux";
 import { newNotification } from "../reducers/messageReducer";
 import { useField } from "../hooks";
-import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const BlogForm = () => {
   const [title, resetTitle] = useField("text");
   const [author, resetAuthor] = useField("text");
-  const [url, resetUrl] = useField("text");
-
+  const [url, resetUrl] = useField("url");
+  const history = useHistory()
   const dispatch = useDispatch();
+
   const handleNewBlog = async (event) => {
     event.preventDefault();
     const newEntry = {
@@ -32,71 +33,58 @@ const BlogForm = () => {
       };
       dispatch(newNotification(error));
     }
+    history.push('/')
+  };
+
+  const resetForm = () => {
     resetTitle();
     resetAuthor();
     resetUrl();
-  };
+  }
 
   return (
-    <>
-      <h3>New Blog Entry</h3>
+    <section className="blogbox">
+      <h3 className="formelement">New Blog Entry</h3>
       {
-        <form onSubmit={handleNewBlog}>
-          <FormDiv>
-            <div>
-              Author
+        <form  onSubmit={handleNewBlog}>
+            <div id="formauthor" className="formelement" >
+              <label>Author</label>
               <input
-                placeholder="Enter Post Author"
+                placeholder="Notreal McFake"
                 name="Author"
                 id="author"
                 {...author}
               />
-            </div>
-            <div>
-              Title
+              </div>
+              <div id="formtitle" className="formelement" >
+              <label>Title</label>
               <input
-                placeholder="Enter Post Title"
+                placeholder="Whoever created this site must be a genius"
                 name="Title"
                 id="title"
                 {...title}
               />
-            </div>
-            <div>
-              Url
+              </div>
+              <div id="formurl" className="formelement" >
+              <label>Url</label>
               <input
-                placeholder="Enter Post URL"
+                placeholder="http://www.totallylegitandrealwebsite.com"
                 name="Url"
                 id="url"
                 {...url}
               />
-            </div>
+              </div>
+            <div className="formelement formbuttons">
             <button className="importantButton" id="submit-blog" type="submit">
               Submit
             </button>
-          </FormDiv>
+            <button  onClick={resetForm} type="button">Reset</button>
+            </div>
         </form>
       }
-    </>
+    </section>
   );
 };
 
-const FormDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  align-items: flex-start;
-  justify-content: space-between;
-
-  div {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1vw;
-    color: white;
-  }
-
-  input {
-    margin-top: 2px;
-  }
-`;
 
 export default BlogForm;

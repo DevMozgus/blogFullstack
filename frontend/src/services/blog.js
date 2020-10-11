@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseurl = "/api/blogs";
+const baseurl = "https://mernstackblognicola.herokuapp.com/api/blogs";
 let token = null;
 
 const setToken = (newToken) => {

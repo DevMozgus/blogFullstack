@@ -1,123 +1,492 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,600&family=Roboto:wght@300;400;500&display=swap');
+:root {
+  --primary-color: #912999;
+  --primary-color-light: #6B7AF2;
+  --burgerbg-color: #313970; 
+  --primary-header-color: rgba(39,47,90,1.0);
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Syne&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.mr-auto {
+  font-family: 'Montserrat', sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* background-color: var(--primary-color-light); */
 
 body {
-  margin: 0;
+  background-color: rgba(30,30,32,1.0);
+  color: rgba(255,255,255,0.8);
   padding: 0;
-  background-color: #1a1a2e;
-  color: rgba(250, 250, 250, 80%);
-}
-
-a {
-  color: rgba(250, 250, 250, 80%);
-  text-decoration: none;
-}
-
-a:hover {
-  color: rgb(250, 250, 250);
-}
-
-h2 {
-  font-size: 3em;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 h3 {
-  font-size: 2em;
-}
-
-input {
-  border-radius: 0.4em;
-  border: none;
-  min-height: 2.5em;
-  min-width: 20em;
-}
-
-input:focus {
-  border-left: solid 5px;
-  border-color: #0f3460;
-}
-
-#login {
-  border-radius: 0.4em;
-  padding: 0.3em;
-  height: auto;
-  width: auto;
-  border: none;
-  background-color: #e94560;
-  color: rgba(250, 250, 250, 80%);
+  font-size: 1.2em;;
 }
 
 .importantButton {
-  border-radius: 0.4em;
-  padding: 0.3em;
-  height: auto;
-  width: auto;
-  border: none;
-  background-color: #e94560;
-  color: rgba(250, 250, 250, 80%);
+  padding: 0.1em 0.4em;
+  border-radius: 0.3em;
+  color: rgba(250,255,250,0.9);
+  background-color: #6B7AF2;
+  outline: none;
 }
 
 .importantButton:hover {
-  cursor: pointer;
-  background-color: rgba(243, 79, 106, 1);
-}
-
-input::placeholder {
-  color: #323232;
+  background-color: rgba(107,122,242,0.8);
 }
 
 button {
-  border-radius: 0.4em;
-  border: 2px solid;
-  min-height: 2.5em;
-  color: rgba(255, 255, 255, 0.8);
-  border-color: rgba(255, 255, 255, 0.2);
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
+  border: none;
+  color: white;
+  padding: 0;
+  margin: 0;
+  color: rgba(255,255,255,0.8);
+  outline: none;
 }
 
-button:hover {
-  cursor: pointer;
+button.navbar-toggler {
+  outline: none;
+}
 
+a,  a:hover {
   color: white;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+  color: rgba(255,255,255,0.8);
+}
+
+nav {
+  height: 50px;
+}
+
+#defaultMenu {
+  background-color: var(--primary-header-color);
+}
+
+#defaultMenu, .content div.blogFilter, .content section.blogs {
+  padding: 0 15px;
+}
+
+.navbar {
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-nav {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navbar-nav li {
+  margin: auto 0;
+  padding-left: 25px;
+}
+#burgerMenu {
+  display: none;
+  width: 100%;
+  padding: 0 15px;
+  background-color: var(--primary-header-color);
+}
+ul li .link {
+  color: rgba(255,255,255,0.8);
+  display: inline-block;
+  width: 100%;
+  outline: none;
+}
+
+ul li a.link:hover, nav ul li button:hover {
+  border-bottom: 2px solid #6B7AF2;
+}
+
+ul li.nav-item #login {
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 0.3em;
+  color: #313970;
+  padding: 0.1em 0.4em;
+}
+
+ul li.nav-item #signup {
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 0.3em;
+  color: #313970;
+  padding: 0.1em 0.4em;
+  border: 2px solid #6B7AF2;
+}
+
+ul li.nav-item #signup:hover, ul li.nav-item #login:hover {
+  background-color: rgba(255,255,255,0.8);
+}
+
+ul li.nav-item #login:hover {
+  border: none;
+}
+
+#burgerMenu .navbar-nav li {
+  margin: auto auto;
+  padding: 0;
+}
+
+.content {
+  margin-top: 40px;
+  border-radius: 0.3em;
+  border: solid 2px #313970;
+  background-color: rgba(50,50,50,0.1);
+}
+
+.blogFilter {
+  background-color: rgba(50,50,50,0.3);
+  border-radius: 0.3em;
+  border-bottom: solid 2px #313970;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.blogFilter button {
+  margin-right: 20px;
+  color: #6B7AF2;
+  outline: none;
+}
+
+.blogFilter label {
+  color: rgba(255,255,255,0.6);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+label {
+  margin: 0 20px 0 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.blogFilter a {
+  margin-left: auto;
+  padding: 0.1em 0.4em;
+  border-radius: 0.3em;
+  color: rgba(250,255,250,0.9);
+  background-color: #6B7AF2;
+  font-weight: normal;
+}
+
+.blogFilter a:hover {
+  background-color: rgba(107,122,242,0.8);
+}
+
+.blogFilter button:hover, #activeFilter {
+  color: rgba(250,255,250,0.8);
+  border-bottom: 2px solid #6B7AF2;
+}
+
+.blogs section{
+  padding: 20px 0;
+}
+
+.blogs section a, .blogs section h3 {
+  color: rgba(250,255,250,0.9);
+  font-weight: 300;
+}
+
+.blogs section label {
+  color: rgba(207,222,242,0.7);
+  font-size: 0.9em;
+}
+
+section.blogs section:not(:last-child) {
+  border-bottom: 2px solid #313970;
+}
+
+section.blogbox {
+  padding: 0 15px;
+}
+
+.loginform {
+  padding: 0 15px;
+  padding-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+section.blogbox form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.formelement {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  width: 50%;
+}
+
+div.formbuttons {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: row;
+  width: 150px;
+  justify-content: space-between;
+}
+
+div.formbuttons :nth-last-child() {
+  background-color: white;
+  border-radius: 0.3em;
+  color: rgb(16, 16, 25,0.8);
+  padding: 0.1em 0.4em;
+  font-size: 1.1em;
+}
+
+.blogpost {
+  background-color: rgba(50,50,50,0.3);
+  border-radius: 0.3em;
+  border-bottom: solid 2px #313970;
+}
+
+.blogpost h3 {
+  padding: 0.5em 15px;
+  font-size: 2em;
+  border-radius: 0.3em;
+  border-bottom: solid 2px #313970;
+  background-color: rgb(90, 90, 120,0.1);
+  font-family: 'Montserrat', sans-serif;
+
+}
+
+.blogpost div.bloginfo {
+  padding: 0.5em 15px;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.blogpost div.bloginfo p {
+  margin-right: 2em;
+  color: rgba(207,222,242,0.7);
+  font-family: 'Montserrat', sans-serif;
+
+}
+
+.blogoptions {
+  padding: 0 15px;
+  padding-bottom: 15px;
+
+}
+
+.blogoptions button {
+  margin-right: 25px;
+  border-radius: 0.3em;
+  color:rgba(207,222,242,0.9);
+  padding: 0.1em 0.4em;
+  border: 1px solid #6B7AF2;
+  outline: none;
+}
+
+.blogoptions button:hover {
+  background-color: rgba(255,255,255, 0.1);
+}
+
+.comments form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1em 10px;
+
+}
+
+#submit-comment {
+  outline: none;
+}
+
+.comments form textarea {
+  height: 200px;
+  width: 100%;
+  background-color: transparent;
+  border-radius: 0.4em;
+  border: none;
+  color: rgba(207,222,242,0.7);
+  padding: 5px;
+  margin-bottom: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9em;
+}
+
+.comments form textarea:focus, form textarea:hover {
+  border-left: 1px solid rgba(207,222,242,0.1);
+}
+
+.comments ul  {
+  list-style-type: none;
+}
+
+.comments ul li {
+  margin: 15px;
+  padding: 10px;
+  border-radius: 0.3em;
+  border: solid 1px rgba(207,222,242,0.1);
+  box-shadow: 2px 2px rgba(50,50,50,0.3);
+  color: rgba(207,222,242,0.7);
+  background-color: rgba(50,50,50,0.1);
+  font-family: 'Montserrat', sans-serif;
+
+}
+
+.comments ul li label {
+  color: rgba(79,87,112,0.7);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.users, .users p {
+  padding: 10px 15px;
+  color: rgba(207,222,242,0.7);
+  font-size: 1.1em;
+}
+
+.users p a {
+  color: rgba(207,222,242,0.9);
+}
+
+.user {
+  padding: 10px 15px;
+  color: rgba(207,222,242,0.7);
+  font-size: 1.1em;
+}
+
+.user ul {
+  list-style-type: none;
+  color: rgba(207,222,242,0.9);
+}
+
+.user ul li {
+  margin: 10px 0;
+}
+
+#helloThere {
+  width: 100%;
+}
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 1.3em;
+}
+
+.welcome h3 {
+  margin: 10px 0;
+  color: rgba(207,222,242,0.8);
+  text-align: center;
+  margin-left: 10px;
+}
+
+.welcome a {
+  margin: 10px 0;
+  color: rgba(207,222,242,0.9);
+  border-bottom: 2px solid #6B7AF2;
+  margin-left: 10px;
+  align-self: center;
+}
+
+.welcome p {
+  width: 80%;
+  margin-left: 10px;
+
+}
+
+form label {
+  margin-bottom: 10px;
+}
+
+form button {
+  margin-top: 5px;
+}
+
+#spinner {
+  width: 100px;
+  height: 100px;
+  padding: 10% 10%;
+  margin: 100px 40%;
+}
+
+@media screen and (min-width: 1215px) {
+  #defaultMenu, .content {
+    padding: 0;
+  }
+  .navbar, .content {
+    width: 1000px;
+    margin: 0 auto;
+  }
+  .content {
+    margin-top: 40px;
+  }
+}
+
+@media screen and (min-width: 1020px) {
+  #defaultMenu, .content {
+    padding: 0;
+    margin: 0 auto;
+  }
+  .navbar, .content {
+    width: 1000px;
+    margin: 0 auto;
+  }
+  .content {
+    margin-top: 40px;
+  }
+}
+
+@media screen and (max-width: 765px) {
+  input {
+    height: 2em;
+  }
+  .formelement {
+    width: 100%;
+  }
+  .blogpost div.bloginfo {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .content button {
+    font-size: 1.1em;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #defaultMenu {
+    display: none;
+  }
+  #burgerMenu {
+    display: block;
+  }
+
+  .navbar-collapse ul{
+    position: fixed;
+    display: flex;
+    top: 47px;
+    right: 10px;
+    background-color:  var(--burgerbg-color);
+    flex-direction: column; 
+    align-items: flex-start;
+    height: 300px;
+    width: 200px;
+    border-radius: 0.1em;
+    padding: 5px;
+    font-size: 1.3rem;
+    box-shadow:rgba(10, 25, 39, 0.35) 0px 0px 14px;
+  }
+
+  input {
+    height: 2.5em;
+  }
+
+  .content button {
+    font-size: 1.2em;
+  }
 }

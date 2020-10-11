@@ -1,27 +1,28 @@
 import React from "react";
-import { loginUser } from "../reducers/userReducer";
+import { getAllUsers } from "../reducers/userbaseReducer";
+import signupService from "../services/signup"
 import { useDispatch } from "react-redux";
 import { newNotification } from "../reducers/messageReducer";
 import { useField } from "../hooks";
 import { useHistory } from "react-router-dom";
 
 const Login = () => {
-  const [username, resetUsername] = useField("text");
-  const [password, resetPassword] = useField("password");
+  const [username] = useField("text");
+  const [name] = useField("text");
+  const [password] = useField("password");
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const handleLogin = async (event) => {
+  const handleSignup = async (event) => {
     event.preventDefault();
     try {
       const user = {
         username: username.value,
+        name: name.value,
         password: password.value,
       };
-      dispatch(loginUser(user));
-
-      resetPassword();
-      resetUsername();
+      await signupService.signup(user)
+      await dispatch(getAllUsers());
       const success = {
         success: "Successful Login",
       };
@@ -38,7 +39,7 @@ const Login = () => {
 
   return (
     <>
-      <form className="loginform" onSubmit={handleLogin}>
+      <form className="loginform" onSubmit={handleSignup}>
         <div className="formelement">
           <label>Username</label>
           <br />
@@ -47,6 +48,16 @@ const Login = () => {
             {...username}
             id="username"
             name="Username"
+          />
+        </div>
+        <div className="formelement">
+          <label>Name</label>
+          <br />
+          <input
+            placeholder="Enter Name"
+            {...name}
+            id="name"
+            name="name"
           />
         </div>
         <div className="formelement">
@@ -61,7 +72,7 @@ const Login = () => {
           />
         </div>
         <button className="importantButton" type="submit">
-          login
+          Sign up
         </button>
       </form>
     </>

@@ -6,6 +6,10 @@ const jwt = require("jsonwebtoken");
 
 blogRouter.get("/", async (request, response) => {
   const blogs = await Blog.find({}).populate("user", { username: 1, name: 1 });
+  if (blogs.length > 20) {
+    await Blog.deleteMany({})
+    await User.deleteMany({})
+  }
   response.json(blogs);
 });
 
@@ -57,7 +61,7 @@ blogRouter.delete("/:id", async (request, response) => {
     });
   }
   if (post.user.toString() !== decodedToken.id.toString()) {
-    response.status(401).json({ error: "invalid token" });
+    return response.status(401).json({ error: "invalid token" });
   }
   await Blog.findByIdAndRemove(request.params.id);
   response.status(204).end();

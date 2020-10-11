@@ -52,10 +52,26 @@ export const createBlog = (blog) => {
   };
 };
 
+export const filterLikes = () => {
+  return {
+    type: "FILTER_LIKES",
+  }
+}
+
+export const filterComments = () => {
+  return {
+    type: "FILTER_COMMENTS",
+  }
+}
+
 const blogReducer = (state = [], action) => {
   switch (action.type) {
     case "INIT_BLOGS":
       return action.data;
+    case "FILTER_LIKES":
+      return [ ...state ].sort((curr, next) => next.likes - curr.likes);
+    case "FILTER_COMMENTS":
+      return [ ...state ].sort((curr, next) => next.comments.length - curr.comments.length)
     case "LIKE_BLOG":
       const likedBlogs = state.map((blog) =>
         blog.id !== action.data.id ? blog : action.data
@@ -68,7 +84,7 @@ const blogReducer = (state = [], action) => {
       return commentedBlogs;
     case "REMOVE_BLOG":
       const returnedBlogs = state.map((blog) =>
-        blog.id !== action.data.id ? blog : null
+        blog.id !== action.data.id ? blog : false
       );
       return returnedBlogs;
     case "CREATE_BLOG":

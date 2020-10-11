@@ -1,73 +1,60 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { filterLikes, filterComments } from "../reducers/blogReducers"
+import { Spinner } from "reactstrap"
 
-const Blogs = () => {
+const Blogs =  () => {
   const blogs = useSelector((state) => state.blogs);
   const user = useSelector((state) => state.user);
-
-  const sortedBlogs = blogs.sort((curr, next) => next.likes - curr.likes);
-
   const direct = user ? "/blogs/create" : "/login";
+  const [ filter, setFilter ] = useState("");
+  const dispatch = useDispatch()
+
+  const toggleFilter = (type) => {
+    if (type === "likes") {
+      dispatch(filterLikes())
+      setFilter("likes")
+    } else if (type === "comments") {
+      dispatch(filterComments())
+      setFilter("comments")
+    }
+  }
+
+  if (!blogs) return <Spinner id="spinner" />
+
 
   return (
     <>
-      <CreateBlog>
-        <Link to={direct}>Make your own blog?</Link>
-      </CreateBlog>
+      <div className="blogFilter">
+        <label>Sort By: </label>
+        <button id={filter === "likes"? "activeFilter": null} 
+        onClick={() => toggleFilter("likes")}>Likes</button>
+        <button id={filter === "comments"? "activeFilter": null}
+        onClick={() => toggleFilter("comments")}>Comments</button>
+        <Link to={direct}>Submit</Link>
+      </div>
 
-      {sortedBlogs.map((blog, index) => {
+      <section className="blogs">
+      {blogs.map((blog, index) => {
         const blogId = `blogNum${index}`;
         return (
-          <Blog id={blogId} key={blog.id}>
-            <LinkDiv>
-              <Link to={`/blogs/${blog.id}`}>
-                <h3>{blog.title}</h3>
-              </Link>
-            </LinkDiv>
-            <BlogInfo>{blog.likes} like/s</BlogInfo>
-            <BlogInfo>By u/{blog.user.username}</BlogInfo>
-          </Blog>
+          <section  id={blogId} key={blog.id}>
+            <Link to={`/blogs/${blog.id}`}>
+              <h3 >{blog.title}</h3>
+            </Link>
+          <div >
+          <label>{blog.likes} like/s</label>
+          <label>{blog.comments.length} comment/s</label>
+          <label>By u/{blog.user.username}</label>
+          </div>
+          </section>
         );
       })}
+      </section>
     </>
   );
 };
 
-const BlogInfo = styled.h4`
-  margin-right: 1em;
-`;
-
-const LinkDiv = styled.div`
-  width: 100%;
-
-  h3 {
-    color: white;
-  }
-`;
-
-const Blog = styled.div`
-  height: 5vw;
-  border-top: solid 2px;
-  border-color: #16213e;
-  margin-bottom: 7%;
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-`;
-
-const CreateBlog = styled.div`
-  display: flex;
-  align-items: center;
-  align-content: flex-end;
-  margin-bottom: 7%;
-  justify-content: space-between;
-  a {
-    text-decoration: underline;
-    text-decoration-color: #e94560;
-  }
-`;
 
 export default Blogs;

@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import { useField } from "../hooks";
 import { commentBlog } from "../reducers/blogReducers";
+import { Spinner } from "reactstrap"
 
 const Comment = ({ blog }) => {
   const [comment, resetComment] = useField("text");
@@ -20,24 +20,27 @@ const Comment = ({ blog }) => {
   };
 
   const user = useSelector((state) => state.user);
+  if (!blog) return <Spinner id="spinner" />
 
   return (
     <>
-      <CommentsDiv>
-        <h5>
-          Comment as <b>{user.username}</b>
-        </h5>
+      <section className="comments">
+        {user ?
+        <div>
         <form onSubmit={handleNewComment}>
-          <input
-            placeholder="Enter your comment..."
+
+          <textarea placeholder="What are your thoughts?"
+            wrap="off"
             name="Comment"
             id="comment"
             {...comment}
-          />
+            ></textarea>
           <button className="importantButton" id="submit-comment" type="submit">
-            Submit Comment
+            Submit
           </button>
         </form>
+        </div>
+        : null}
         {blog.comments ? (
           <ul>
             {blog.comments.map((comment, index) => (
@@ -48,51 +51,10 @@ const Comment = ({ blog }) => {
             ))}
           </ul>
         ) : null}
-      </CommentsDiv>
+      </section>
     </>
   );
 };
 
-const CommentsDiv = styled.div`
-  h5 {
-    color: white;
-  }
-  b {
-    text-decoration: underline;
-    text-decoration-color: #0f3460;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-
-  button {
-    width: 20%;
-    margin-top: 15px;
-  }
-
-  ul {
-    list-style-type: none;
-  }
-
-  ul li {
-    border: solid 1px;
-    border-radius: 4px;
-    border-color: #0f3460;
-    margin: 1em;
-    padding: 1em;
-    display: flex;
-    flex-direction: column;
-  }
-
-  p {
-    margin-left: 1em;
-  }
-
-  label {
-    color: rgba(255, 255, 255, 0.5);
-  }
-`;
 
 export default Comment;
